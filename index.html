@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Présentation AAC CY Tech - JPO</title>
+    <title>Présentation At All Cost - CY Tech AI Lab</title>
     
     <!-- FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- Open Sans pour le corps de texte & Orbitron (Similaire à Android 101 pour le Web) -->
+    <!-- Orbitron pour le style Android 101, Open Sans pour le texte, Noto Sans JP pour le Japonais -->
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Orbitron:wght@700;900&family=Noto+Sans+JP:wght@700&display=swap" rel="stylesheet">
     
     <!-- ICONS -->
@@ -16,29 +16,26 @@
     
     <style>
         /* =========================================
-           CHARTE GRAPHIQUE AAC
+           CHARTE GRAPHIQUE AT ALL COST
            ========================================= */
         :root {
-            /* PALETTE COULEURS */
-            --hex-yellow-title: #FFC000; /* Titres */
-            --hex-yellow: #ffcb25;       /* Jaune standard */
-            --hex-green: #13544e;        /* Vert sombre */
-            --hex-blue: #4a7da5;         /* Bleu ardoise/acier */
-            --hex-black: #000000;        /* Fond */
+            /* PALETTE EXACTE */
+            --c-yellow-title: #FFC000;
+            --c-yellow: #ffcb25;
+            --c-green: #13544e;
+            --c-blue: #4a7da5;
+            --c-black: #000000;
             
             /* TYPOGRAPHIE */
-            /* Note: Pour utiliser Android 101 exactement, il faudrait héberger le fichier .ttf/.woff */
-            /* Ici, Orbitron sert de fallback visuel très proche (Tech/Futuriste) */
-            --font-title: 'Orbitron', 'Android 101', sans-serif; 
+            --font-display: 'Orbitron', sans-serif; /* Style Android 101 */
             --font-body: 'Open Sans', sans-serif;
             --font-jp: 'Noto Sans JP', sans-serif;
         }
 
-        /* RESET & BASE */
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            background-color: #1a1a1a; /* Fond page web hors présentation */
+            background-color: #121212;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -48,73 +45,59 @@
             overflow: hidden;
         }
 
-        /* CADRE PRÉSENTATION */
+        /* CONTAINER PRINCIPAL */
         #presentation-container {
             width: 1280px;
             height: 720px;
-            background-color: var(--hex-black);
-            border: 4px solid var(--hex-green); /* Bordure vert charte */
-            border-radius: 0; /* Angles droits pour le style Tech/Android */
-            box-shadow: 0 0 50px rgba(255, 203, 37, 0.1);
+            background-color: var(--c-black);
             position: relative;
             overflow: hidden;
+            border: 2px solid var(--c-green);
+            box-shadow: 0 0 40px rgba(19, 84, 78, 0.4);
         }
 
-        /* ÉLÉMENTS DÉCORATIFS JAPONAIS & TECH */
-        .deco-jp {
+        /* BACKGROUND ELEMENTS (TECH / CYBER) */
+        .bg-grid {
+            position: absolute;
+            width: 100%; height: 100%;
+            background-image: 
+                linear-gradient(rgba(74, 125, 165, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(74, 125, 165, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            opacity: 0.3;
+            z-index: 0;
+        }
+
+        .deco-circle {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+            z-index: 0;
+        }
+        .circle-1 {
+            width: 600px; height: 600px;
+            background: var(--c-green);
+            top: -200px; right: -100px;
+        }
+        .circle-2 {
+            width: 500px; height: 500px;
+            background: var(--c-blue);
+            bottom: -150px; left: -100px;
+        }
+
+        .jp-text {
             position: absolute;
             font-family: var(--font-jp);
             font-weight: 700;
-            color: rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.03);
+            font-size: 120px;
+            right: 20px;
+            bottom: 0;
+            line-height: 1;
             z-index: 0;
-            user-select: none;
-            writing-mode: vertical-rl;
-            text-orientation: upright;
-            font-size: 80px;
-            right: 40px;
-            top: 50%;
-            transform: translateY(-50%);
-            letter-spacing: 20px;
+            pointer-events: none;
         }
-
-        .graphic-shape {
-            position: absolute;
-            z-index: 0;
-        }
-        
-        /* Forme Verte */
-        .shape-green {
-            width: 600px;
-            height: 600px;
-            background: linear-gradient(135deg, var(--hex-green), transparent);
-            border-radius: 50%;
-            top: -200px;
-            left: -200px;
-            opacity: 0.6;
-            filter: blur(80px);
-        }
-        
-        /* Forme Bleue */
-        .shape-blue {
-            width: 500px;
-            height: 500px;
-            background: linear-gradient(135deg, var(--hex-blue), transparent);
-            border-radius: 50%;
-            bottom: -150px;
-            right: 10%;
-            opacity: 0.5;
-            filter: blur(60px);
-        }
-
-        /* Lignes Tech */
-        .tech-line {
-            position: absolute;
-            background: var(--hex-yellow);
-            opacity: 0.8;
-            z-index: 1;
-        }
-        .line-top { top: 40px; left: 40px; width: 100px; height: 4px; }
-        .line-bottom { bottom: 40px; right: 40px; width: 100px; height: 4px; }
 
         /* SLIDES */
         .slide {
@@ -122,277 +105,244 @@
             top: 0; left: 0; width: 100%; height: 100%;
             opacity: 0;
             z-index: 1;
-            transition: opacity 0.5s ease-in-out;
+            transition: opacity 0.6s ease, transform 0.6s ease;
+            transform: scale(1.02);
+            padding: 60px 80px;
             display: flex;
-            padding: 80px;
             flex-direction: column;
         }
+        .slide.active { opacity: 1; z-index: 10; transform: scale(1); }
 
-        .slide.active { opacity: 1; z-index: 10; }
-
-        /* TYPO STYLES */
+        /* TYPOGRAPHY */
         h1 {
-            font-family: var(--font-title);
-            color: var(--hex-yellow-title); /* Code Titre #FFC000 */
-            font-size: 90px;
+            font-family: var(--font-display);
+            color: var(--c-yellow-title);
+            font-size: 80px;
             text-transform: uppercase;
-            line-height: 1;
-            margin-bottom: 20px;
-            text-shadow: 0 0 10px rgba(255, 192, 0, 0.3);
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(255, 192, 0, 0.3);
         }
 
         h2 {
-            font-family: var(--font-title);
-            color: var(--hex-yellow-title);
-            font-size: 52px;
-            margin-bottom: 30px;
-            border-left: 6px solid var(--hex-green);
-            padding-left: 20px;
+            font-family: var(--font-display);
+            color: var(--c-yellow);
+            font-size: 48px;
+            margin-bottom: 40px;
             text-transform: uppercase;
+            position: relative;
+            display: inline-block;
+        }
+        h2::after {
+            content: '';
+            display: block;
+            width: 100%;
+            height: 4px;
+            background: var(--c-green);
+            margin-top: 10px;
         }
 
-        h3 {
-            font-family: var(--font-title);
-            color: var(--hex-blue);
-            font-size: 28px;
-            margin-bottom: 15px;
+        p {
+            font-size: 24px;
+            line-height: 1.5;
+            color: #d1d5db;
+            margin-bottom: 20px;
+            max-width: 900px;
         }
 
-        p, li {
-            font-family: var(--font-body); /* Open Sans */
-            font-size: 22px;
-            line-height: 1.6;
-            color: #e0e0e0;
-            margin-bottom: 15px;
-        }
-        
-        strong { color: var(--hex-yellow); }
-
-        /* LISTES */
-        ul { list-style: none; }
-        ul li::before {
-            content: "►";
-            color: var(--hex-yellow);
-            margin-right: 10px;
-            font-size: 18px;
-        }
+        .highlight { color: var(--c-yellow); font-weight: 700; }
+        .tech-text { color: var(--c-blue); font-family: monospace; font-size: 18px; margin-top: 10px; }
 
         /* LAYOUTS */
-        
-        /* 1. Titre Centré */
-        .layout-center {
+        .center-layout {
             justify-content: center;
             align-items: center;
             text-align: center;
         }
-        .layout-center h1 { font-size: 140px; }
-        .subtitle {
-            font-size: 36px;
-            color: var(--hex-blue);
-            font-family: var(--font-title);
-            letter-spacing: 4px;
-        }
 
-        /* 2. Split (Texte + Image) */
-        .layout-split {
+        .split-layout {
             flex-direction: row;
             align-items: center;
             gap: 60px;
         }
-        .col-text { flex: 1; }
-        .col-img {
-            flex: 1;
-            height: 100%;
-            position: relative;
-        }
-        .img-container {
-            width: 100%;
-            height: 100%;
-            border: 2px solid var(--hex-blue);
-            background: #000;
-            padding: 10px;
-            position: relative;
-        }
-        /* Effet "Cadre Tech" */
-        .img-container::after {
-            content: '';
-            position: absolute;
-            top: -10px; right: -10px;
-            width: 40px; height: 40px;
-            border-top: 4px solid var(--hex-yellow);
-            border-right: 4px solid var(--hex-yellow);
-        }
-        .img-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: grayscale(20%) contrast(110%); /* Léger effet style manga/tech */
+        .content-side { flex: 1; }
+        .visual-side { 
+            flex: 0.8; 
+            height: 100%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
         }
 
-        /* 3. Grid (Cartes) */
-        .grid-3 {
+        /* COMPONENTS */
+        .tech-card-container {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 30px;
-            margin-top: 40px;
             width: 100%;
+            margin-top: 40px;
         }
-        .card {
-            background: rgba(19, 84, 78, 0.3); /* Hex Green avec opacité */
-            border: 1px solid var(--hex-blue);
+        .tech-card {
+            background: rgba(19, 84, 78, 0.2);
+            border: 1px solid var(--c-green);
             padding: 30px;
             text-align: center;
-            transition: transform 0.3s;
+            border-radius: 4px;
+            transition: 0.3s;
         }
-        .card:hover {
-            transform: translateY(-10px);
-            background: rgba(19, 84, 78, 0.6);
-            border-color: var(--hex-yellow);
+        .tech-card:hover {
+            background: rgba(19, 84, 78, 0.4);
+            border-color: var(--c-yellow);
+            transform: translateY(-5px);
         }
-        .card i {
+        .tech-card i {
             font-size: 40px;
-            color: var(--hex-yellow);
+            color: var(--c-blue);
             margin-bottom: 20px;
         }
+        .tech-card h3 {
+            font-family: var(--font-display);
+            color: #fff;
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
 
-        /* SOCIAL BAR */
-        .social-bar {
-            margin-top: 50px;
-            display: flex;
-            gap: 30px;
+        /* IMAGE STYLING */
+        .hologram-box {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            border: 2px solid var(--c-blue);
+            padding: 10px;
+            background: rgba(0,0,0,0.5);
         }
-        .social-item {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            font-family: var(--font-title);
-            font-size: 24px;
-            color: var(--hex-blue);
-            border: 1px solid var(--hex-blue);
-            padding: 10px 30px;
-            border-radius: 4px;
+        .hologram-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(40%) sepia(20%) hue-rotate(180deg) contrast(1.2); /* Tech look */
         }
-        .social-item i { color: var(--hex-yellow); }
+        .hologram-corners::before, .hologram-corners::after {
+            content: ''; position: absolute; width: 20px; height: 20px;
+            border: 2px solid var(--c-yellow);
+            transition: 0.3s;
+        }
+        .hologram-corners::before { top: -2px; left: -2px; border-right: 0; border-bottom: 0; }
+        .hologram-corners::after { bottom: -2px; right: -2px; border-left: 0; border-top: 0; }
+
+        /* LIST */
+        ul.tech-list { list-style: none; }
+        ul.tech-list li {
+            font-size: 22px;
+            margin-bottom: 15px;
+            padding-left: 30px;
+            position: relative;
+            color: #e0e0e0;
+        }
+        ul.tech-list li::before {
+            content: '>';
+            position: absolute;
+            left: 0;
+            color: var(--c-yellow);
+            font-family: var(--font-display);
+            font-weight: 700;
+        }
 
     </style>
 </head>
 <body>
 
 <div id="presentation-container">
-    <!-- Éléments de fond fixes -->
-    <div class="deco-jp">未来は明るい</div> <!-- Texte Japonais -->
-    <div class="shape-green graphic-shape"></div>
-    <div class="shape-blue graphic-shape"></div>
-    <div class="tech-line line-top"></div>
-    <div class="tech-line line-bottom"></div>
+    <div class="bg-grid"></div>
+    <div class="deco-circle circle-1"></div>
+    <div class="deco-circle circle-2"></div>
+    <div class="jp-text">未来は明るい</div>
 
-    <!-- SLIDE 1: ACCUEIL -->
-    <div class="slide layout-center active">
-        <h1>AAC</h1>
-        <div class="subtitle">CY TECH</div>
-        <p style="margin-top: 30px; color: #fff; opacity: 0.8;">ASSOCIATION ARTISTIQUE ET CULTURELLE</p>
+    <!-- SLIDE 1: INTRO -->
+    <div class="slide center-layout active">
+        <h3 style="color: var(--c-blue); letter-spacing: 4px; font-family: var(--font-display);">ASSOCIATION</h3>
+        <h1>AT ALL COST</h1>
+        <h2 style="font-size: 32px; border: none; color: #fff;">CY TECH <span style="color: var(--c-yellow);">AI LAB</span></h2>
+        <p style="margin-top: 30px; font-size: 26px;">"Démocratiser l'IA pour tous les étudiants"</p>
+        <div class="tech-text">INITIALIZING SYSTEM... [OK]</div>
     </div>
 
-    <!-- SLIDE 2: QUI SOMMES NOUS -->
-    <div class="slide layout-split">
-        <div class="col-text">
-            <h2>L'esprit AAC</h2>
-            <p>Bienvenue dans la dimension créative de l'école.</p>
-            <p>Nous sommes le point de rencontre entre la technologie et l'art. L'AAC, c'est l'endroit où tu peux déconnecter des cours et laisser libre cours à ton imagination.</p>
-            <p style="color: var(--hex-blue); font-weight: 700;">// ART . CULTURE . EVENT</p>
-        </div>
-        <div class="col-img">
-            <div class="img-container">
-                <img src="" alt="Ambiance Asso">
-            </div>
-        </div>
-    </div>
-
-    <!-- SLIDE 3: MUSIQUE -->
-    <div class="slide layout-split">
-        <div class="col-img">
-            <div class="img-container">
-                <img src="" alt="Concert">
-            </div>
-        </div>
-        <div class="col-text">
-            <h2>Pôle Musique</h2>
-            <p>Tu as le rythme dans la peau ?</p>
-            <ul>
-                <li>Locaux de répétition accessibles</li>
-                <li>Matériel complet (Batterie, Amplis...)</li>
-                <li>Concerts & Jam Sessions</li>
+    <!-- SLIDE 2: MISSION -->
+    <div class="slide split-layout">
+        <div class="content-side">
+            <h2>NOTRE MISSION</h2>
+            <p>L'Intelligence Artificielle transforme le monde. <span class="highlight">Ne reste pas spectateur.</span></p>
+            <p>At All Cost (AAC) a pour but de rendre l'IA <strong>accessible, fun et utile</strong> pour tous, peu importe ta majeure.</p>
+            <ul class="tech-list" style="margin-top: 30px;">
+                <li>Pas de code requis</li>
+                <li>Pas de compétences techniques</li>
+                <li>Juste de la curiosité</li>
             </ul>
-            <p style="margin-top: 20px; font-size: 18px; color: var(--hex-yellow);">System.out.println("Let's Rock");</p>
         </div>
-    </div>
-
-    <!-- SLIDE 4: ARTS VISUELS -->
-    <div class="slide layout-split">
-        <div class="col-text">
-            <h2>Arts Visuels</h2>
-            <h3>Dessin & Peinture</h3>
-            <p>Des ateliers pour apprendre et des expos pour briller.</p>
-            <h3>Photographie</h3>
-            <p>Couverture des galas, shootings studio et sorties urbaines.</p>
-        </div>
-        <div class="col-img">
-            <div class="img-container">
-                <img src="" alt="Art">
+        <div class="visual-side">
+            <div class="hologram-box hologram-corners">
+                <img src="" alt="AI Network">
             </div>
         </div>
     </div>
 
-    <!-- SLIDE 5: THÉÂTRE -->
-    <div class="slide layout-split">
-        <div class="col-img">
-            <div class="img-container">
-                <img src="" alt="Théâtre">
+    <!-- SLIDE 3: ACTIVITÉS -->
+    <div class="slide center-layout">
+        <h2>CE QUE NOUS OFFRONS</h2>
+        <div class="tech-card-container">
+            <div class="tech-card">
+                <i class="fa-solid fa-graduation-cap"></i>
+                <h3>FORMATIONS</h3>
+                <p style="font-size: 16px; margin:0;">Initiation aux outils IA (ChatGPT, Midjourney) et Prompt Engineering.</p>
             </div>
-        </div>
-        <div class="col-text">
-            <h2>Théâtre</h2>
-            <p>Monte sur scène et prends la lumière.</p>
-            <p>Nos troupes préparent des pièces tout au long de l'année, de la comédie classique à l'improvisation totale.</p>
-            <p><strong>Développe ton éloquence.</strong></p>
-        </div>
-    </div>
-
-    <!-- SLIDE 6: EVENTS (GRID) -->
-    <div class="slide layout-center">
-        <h2>Nos Évènements</h2>
-        <div class="grid-3">
-            <div class="card">
-                <i class="fa-solid fa-music"></i>
-                <h3>CONCERTS</h3>
-                <p>Live Sessions sur le campus</p>
+            <div class="tech-card">
+                <i class="fa-solid fa-rocket"></i>
+                <h3>PROJETS</h3>
+                <p style="font-size: 16px; margin:0;">Collaborations sur des projets concrets et innovants utilisant l'IA.</p>
             </div>
-            <div class="card">
-                <i class="fa-solid fa-camera-retro"></i>
-                <h3>EXPOS</h3>
-                <p>Vernissages & Concours</p>
-            </div>
-            <div class="card">
-                <i class="fa-solid fa-star"></i>
-                <h3>TALENT SHOW</h3>
-                <p>La scène ouverte annuelle</p>
+            <div class="tech-card">
+                <i class="fa-solid fa-key"></i>
+                <h3>ACCÈS PREMIUM</h3>
+                <p style="font-size: 16px; margin:0;">Accès à des abonnements payants d'outils IA pour nos membres.</p>
             </div>
         </div>
     </div>
 
-    <!-- SLIDE 7: CONTACT -->
-    <div class="slide layout-center">
-        <h1>REJOINS-NOUS</h1>
-        <p style="font-size: 28px;">L'avenir est brillant avec l'AAC</p>
+    <!-- SLIDE 4: WHY JOIN -->
+    <div class="slide split-layout">
+        <div class="visual-side">
+            <div class="hologram-box hologram-corners">
+                <img src="" alt="Future Tech">
+            </div>
+        </div>
+        <div class="content-side">
+            <h2>POURQUOI NOUS REJOINDRE ?</h2>
+            <p>Maîtriser l'IA est la compétence clé de demain.</p>
+            <p>Avec AAC, tu apprends à utiliser ces outils pour gagner du temps, booster ta créativité et préparer ton avenir professionnel.</p>
+            <div style="background: rgba(255, 192, 0, 0.1); border-left: 4px solid var(--c-yellow); padding: 15px; margin-top: 20px;">
+                <p style="margin: 0; font-size: 18px; color: #fff;">"The future is bright."</p>
+                <p style="margin: 0; font-size: 14px; color: var(--c-blue); font-family: var(--font-display);">未来は明るい</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 5: CONTACT -->
+    <div class="slide center-layout">
+        <h1>JOIN THE LAB</h1>
+        <p>Retrouve-nous sur le stand ou scanne le QR Code.</p>
         
-        <div class="social-bar">
-            <div class="social-item"><i class="fa-brands fa-instagram"></i> @aac_cytech</div>
-            <div class="social-item"><i class="fa-brands fa-discord"></i> Discord</div>
+        <div style="display: flex; gap: 40px; margin-top: 40px;">
+            <div style="text-align: center;">
+                <i class="fa-brands fa-instagram" style="font-size: 50px; color: var(--c-yellow);"></i>
+                <p style="margin-top: 10px; font-family: var(--font-display);">@atallcost.ai</p>
+            </div>
+            <div style="text-align: center;">
+                <i class="fa-regular fa-envelope" style="font-size: 50px; color: var(--c-blue);"></i>
+                <p style="margin-top: 10px; font-family: var(--font-display);">aac@cy-tech.fr</p>
+            </div>
         </div>
         
-        <div style="margin-top: 60px; font-family: var(--font-jp); color: var(--hex-green); opacity: 0.5; font-size: 24px;">
-            未来は明るい
-        </div>
+        <div class="tech-text" style="margin-top: 60px;">// END OF TRANSMISSION</div>
     </div>
 
 </div>
@@ -401,7 +351,7 @@
     document.addEventListener('DOMContentLoaded', () => {
         const slides = document.querySelectorAll('.slide');
         let currentSlide = 0;
-        const slideInterval = 5000; // 5 secondes par slide
+        const slideInterval = 6000; 
 
         function nextSlide() {
             slides[currentSlide].classList.remove('active');
