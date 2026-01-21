@@ -248,6 +248,122 @@
             font-weight: 700;
         }
 
+        /* GEMINI DEMO STYLES */
+        .demo-interface {
+            width: 100%;
+            max-width: 800px;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid var(--c-blue);
+            padding: 30px;
+            margin-top: 20px;
+            border-radius: 8px;
+            position: relative;
+        }
+        .demo-interface::before {
+            content: 'POWERED BY GEMINI';
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--c-black);
+            color: var(--c-blue);
+            font-size: 12px;
+            padding: 0 10px;
+            font-family: var(--font-display);
+        }
+        .input-group {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .demo-input {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--c-green);
+            padding: 15px;
+            color: #fff;
+            font-family: var(--font-body);
+            font-size: 18px;
+            border-radius: 4px;
+        }
+        .demo-input:focus {
+            outline: none;
+            border-color: var(--c-yellow);
+        }
+        .demo-btn {
+            background: var(--c-green);
+            color: #fff;
+            border: none;
+            padding: 0 30px;
+            font-family: var(--font-display);
+            font-size: 18px;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-radius: 4px;
+        }
+        .demo-btn:hover {
+            background: var(--c-blue);
+        }
+        .demo-result {
+            min-height: 100px;
+            border-top: 1px dashed rgba(255, 255, 255, 0.2);
+            padding-top: 20px;
+            font-style: italic;
+            color: var(--c-yellow);
+            font-size: 20px;
+        }
+        .loading {
+            animation: blink 1s infinite;
+        }
+        @keyframes blink { 50% { opacity: 0.5; } }
+
+        /* NAV CONTROLS */
+        .controls {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+            display: flex;
+            gap: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 12px 25px;
+            border-radius: 50px;
+            border: 1px solid var(--c-green);
+            backdrop-filter: blur(5px);
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        #presentation-container:hover .controls {
+            opacity: 1;
+        }
+
+        .control-btn {
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-size: 22px;
+            cursor: pointer;
+            transition: 0.3s;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        .control-btn:hover {
+            color: var(--c-yellow);
+            background: rgba(255, 255, 255, 0.1);
+            transform: scale(1.1);
+        }
+        .control-btn.active {
+            color: var(--c-yellow);
+        }
+
     </style>
 </head>
 <body>
@@ -257,6 +373,13 @@
     <div class="deco-circle circle-1"></div>
     <div class="deco-circle circle-2"></div>
     <div class="jp-text">未来は明るい</div>
+
+    <!-- CONTROLS -->
+    <div class="controls">
+        <button class="control-btn" onclick="prevSlide()" title="Précédent"><i class="fa-solid fa-backward-step"></i></button>
+        <button class="control-btn" id="pause-btn" onclick="togglePause()" title="Lecture/Pause"><i class="fa-solid fa-pause"></i></button>
+        <button class="control-btn" onclick="manualNextSlide()" title="Suivant"><i class="fa-solid fa-forward-step"></i></button>
+    </div>
 
     <!-- SLIDE 1: INTRO -->
     <div class="slide center-layout active">
@@ -326,7 +449,27 @@
         </div>
     </div>
 
-    <!-- SLIDE 5: CONTACT -->
+    <!-- SLIDE 5: LIVE DEMO (GEMINI) -->
+    <div class="slide center-layout">
+        <h2>LABO EXPÉRIMENTAL</h2>
+        <p>Testez notre IA génératrice d'idées de projets.</p>
+        
+        <div class="demo-interface">
+            <div class="input-group">
+                <input type="text" id="ai-theme" class="demo-input" placeholder="Donne un thème (ex: Musique, Sport, Écologie...)">
+                <button onclick="generateProject()" class="demo-btn">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> Imaginer ✨
+                </button>
+            </div>
+            <div id="ai-result" class="demo-result">
+                En attente d'un thème...
+            </div>
+        </div>
+        
+        <p style="font-size: 14px; margin-top: 15px; opacity: 0.6;">*Le défilement se met en pause pendant que tu utilises l'outil.</p>
+    </div>
+
+    <!-- SLIDE 6: CONTACT -->
     <div class="slide center-layout">
         <h1>JOIN THE LAB</h1>
         <p>Retrouve-nous sur le stand ou scanne le QR Code.</p>
@@ -338,7 +481,7 @@
             </div>
             <div style="text-align: center;">
                 <i class="fa-regular fa-envelope" style="font-size: 50px; color: var(--c-blue);"></i>
-                <p style="margin-top: 10px; font-family: var(--font-display);">atallcostai@gmail.com</p>
+                <p style="margin-top: 10px; font-family: var(--font-display);">aac@cy-tech.fr</p>
             </div>
         </div>
         
@@ -347,20 +490,113 @@
 
 </div>
 
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const slides = document.querySelectorAll('.slide');
-        let currentSlide = 0;
-        const slideInterval = 6000; 
+<script type="module">
+    // CONFIGURATION GEMINI
+    import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai";
+    const apiKey = ""; // API Key fournie par l'environnement
+    const genAI = new GoogleGenerativeAI(apiKey);
+    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash-preview-09-2025" });
 
-        function nextSlide() {
-            slides[currentSlide].classList.remove('active');
-            currentSlide = (currentSlide + 1) % slides.length;
-            slides[currentSlide].classList.add('active');
+    // LOGIQUE SLIDESHOW
+    const slides = document.querySelectorAll('.slide');
+    const container = document.getElementById('presentation-container');
+    let currentSlide = 0;
+    const slideIntervalTime = 6000; 
+    let slideInterval;
+    
+    // États de pause
+    let isHoverPaused = false;
+    let isManualPaused = false;
+
+    // Helper pour changer de slide
+    function showSlide(index) {
+        slides.forEach(s => s.classList.remove('active'));
+        slides[index].classList.add('active');
+    }
+
+    // Fonctions de navigation exposées globalement
+    window.nextSlide = function(auto = true) {
+        // Si c'est automatique et qu'on est en pause (hover ou manuel), on ne fait rien
+        if (auto && (isHoverPaused || isManualPaused)) return;
+        
+        currentSlide = (currentSlide + 1) % slides.length;
+        showSlide(currentSlide);
+    }
+    
+    // Wrapper pour le bouton manuel (force le changement)
+    window.manualNextSlide = function() {
+        window.nextSlide(false);
+    }
+
+    window.prevSlide = function() {
+        currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+        showSlide(currentSlide);
+    }
+
+    window.togglePause = function() {
+        isManualPaused = !isManualPaused;
+        const btnIcon = document.querySelector('#pause-btn i');
+        
+        if (isManualPaused) {
+            btnIcon.classList.remove('fa-pause');
+            btnIcon.classList.add('fa-play'); // Affiche 'Play' pour dire "clique pour reprendre"
+        } else {
+            btnIcon.classList.remove('fa-play');
+            btnIcon.classList.add('fa-pause'); // Affiche 'Pause' pour dire "clique pour pauser"
+        }
+    }
+
+    function startSlideshow() {
+        // Appelle nextSlide en mode auto toutes les X secondes
+        slideInterval = setInterval(() => window.nextSlide(true), slideIntervalTime);
+    }
+
+    // Pause au survol ou focus (pour permettre l'utilisation de la démo)
+    // Note: le survol ne change pas l'état du bouton "Pause" manuel, c'est une pause temporaire
+    container.addEventListener('mouseenter', () => { isHoverPaused = true; });
+    container.addEventListener('mouseleave', () => { isHoverPaused = false; });
+    
+    // Gérer les inputs spécifiquement
+    const inputField = document.getElementById('ai-theme');
+    inputField.addEventListener('focus', () => { isHoverPaused = true; });
+    inputField.addEventListener('blur', () => { isHoverPaused = false; });
+
+    // FONCTION GEMINI
+    window.generateProject = async function() {
+        const theme = document.getElementById('ai-theme').value;
+        const resultDiv = document.getElementById('ai-result');
+        
+        if (!theme) {
+            resultDiv.innerText = "Merci d'entrer un thème d'abord !";
+            return;
         }
 
-        setInterval(nextSlide, slideInterval);
-    });
+        resultDiv.innerHTML = "<span class='loading'>Analyse des données en cours...</span>";
+        isManualPaused = true; // On force la pause manuelle pendant la génération pour ne pas perdre l'écran
+        
+        // Met à jour l'icône du bouton pause
+        const btnIcon = document.querySelector('#pause-btn i');
+        btnIcon.classList.remove('fa-pause');
+        btnIcon.classList.add('fa-play');
+
+        try {
+            const prompt = `Tu es un assistant créatif pour l'association "At All Cost" (AI Lab étudiant). L'utilisateur propose le thème : "${theme}". 
+            Invente un nom de projet tech/futuriste court, et une description en 2 phrases d'un projet utilisant l'IA que des étudiants pourraient réaliser sur ce thème. 
+            Ton ton doit être inspirant, tech et dynamique. Pas de markdown, juste du texte brut.`;
+
+            const result = await model.generateContent(prompt);
+            const response = await result.response;
+            const text = response.text();
+            
+            resultDiv.innerText = text;
+        } catch (error) {
+            console.error(error);
+            resultDiv.innerText = "Erreur de connexion au noyau IA. Réessayez.";
+        }
+    };
+
+    // Démarrage
+    startSlideshow();
 </script>
 
 </body>
